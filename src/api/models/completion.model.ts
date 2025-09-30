@@ -1,12 +1,12 @@
 import { ItemStatusType } from '@/type'
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
-import ProductSchema from './product.model'
 import { DataTypes } from 'sequelize'
+import { BelongsTo, Column, ForeignKey, Model, Table } from 'sequelize-typescript'
+import ProductSchema from './product.model'
 
 const { INTEGER, STRING, BOOLEAN, FLOAT, DATE } = DataTypes
 
-export type HangMuc = {
-  maHangMuc: STRING(50)
+export type Completion = {
+  id: number
   productID: number
   quantityIroned?: number | null
   quantityCheckPassed?: number | null

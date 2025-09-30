@@ -1,26 +1,27 @@
+// .eslintrc
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "prettier"],
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "eslint-config-prettier", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    // ✅ GÓI NÀY LÀ QUAN TRỌNG NHẤT
+    // Nó sẽ tự động làm 3 việc:
+    // 1. Kích hoạt eslint-plugin-prettier
+    // 2. Tắt các rule của ESLint xung đột với Prettier (nhờ eslint-config-prettier)
+    // 3. Báo lỗi các vấn đề của Prettier như là lỗi của ESLint
+    "plugin:prettier/recommended"
+  ],
   "rules": {
+    // Tắt các rule không cần thiết hoặc bạn muốn tùy chỉnh
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-namespace": "off",
     "no-case-declarations": "off",
-    "prettier/prettier": [
-      "warn",
-      {
-        "arrowParens": "always",
-        "semi": false,
-        "trailingComma": "none",
-        "tabWidth": 2,
-        "endOfLine": "auto",
-        "useTabs": false,
-        "singleQuote": true,
-        "printWidth": 120,
-        "jsxSingleQuote": true
-      }
-    ]
+
+    // ✅ SỬA LỖI: Chỉ cần bật rule của prettier lên là "warn" hoặc "error".
+    // KHÔNG cần copy toàn bộ cấu hình prettier vào đây nữa.
+    "prettier/prettier": "warn"
   }
 }

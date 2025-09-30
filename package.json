@@ -26,12 +26,11 @@
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "mysql2": "^3.6.3",
     "nodemailer": "^6.9.9",
     "reflect-metadata": "^0.2.1",
     "sequelize": "^6.34.0",
     "sequelize-typescript": "^2.1.5",
-    "util": "^0.12.5"
+    "tedious": "^8.3.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
@@ -52,7 +51,6 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "express-validator": "^7.0.1",
-    "module-alias": "^2.2.3",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",

@@ -1,13 +1,13 @@
-import { Completion } from '@/api/models/completion.model'
-import * as service from '@/services/completion.service'
+import { HangMuc } from '@/api/models/hang_muc.model'
+import * as service from '@/services/hang_muc.service'
 import { RequestBodyType } from '@/type'
 import { NextFunction, Request, Response } from 'express'
 
-const NAMESPACE = 'controllers/completion'
+const NAMESPACE = 'controllers/hang_muc'
 
 export const createNewItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const dataRequest: Completion = {
+    const dataRequest: HangMuc = {
       ...req.body,
       status: req.body.status ?? 'active'
     }
@@ -20,18 +20,8 @@ export const createNewItem = async (req: Request, res: Response, next: NextFunct
 
 export const getItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = Number(req.params.id)
-    const itemFound = await service.getItemByPk(id)
-    return res.formatter.ok({ data: itemFound })
-  } catch (error: any) {
-    return res.formatter.badRequest({ message: error })
-  }
-}
-
-export const getItemByProductID = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const productID = Number(req.params.productID)
-    const itemFound = await service.getItemByProductID(productID)
+    const maHangMuc = String(req.params.maHangMuc)
+    const itemFound = await service.getItemByPk(maHangMuc)
     return res.formatter.ok({ data: itemFound })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })
@@ -62,24 +52,11 @@ export const getItems = async (req: Request, res: Response, next: NextFunction) 
 
 export const updateItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = Number(req.params.id)
-    const itemRequest: Completion = {
+    const maHangMuc = String(req.params.maHangMuc)
+    const itemRequest: HangMuc = {
       ...req.body
     }
-    const itemUpdated = await service.updateItemByPk(id, itemRequest)
-    return res.formatter.ok({ data: itemUpdated })
-  } catch (error: any) {
-    return res.formatter.badRequest({ message: error })
-  }
-}
-
-export const updateItemByProductID = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const productID = Number(req.params.productID)
-    const itemRequest: Completion = {
-      ...req.body
-    }
-    const itemUpdated = await service.updateItemByProductID(productID, itemRequest)
+    const itemUpdated = await service.updateItemByPk(maHangMuc, itemRequest)
     return res.formatter.ok({ data: itemUpdated })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })
@@ -88,18 +65,8 @@ export const updateItemByProductID = async (req: Request, res: Response, next: N
 
 export const deleteItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = Number(req.params.id)
-    const destroyed = await service.deleteItemByPk(id)
-    return res.formatter.ok({ message: destroyed.message })
-  } catch (error: any) {
-    return res.formatter.badRequest({ message: error })
-  }
-}
-
-export const deleteItemByProductID = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const productID = Number(req.params.productID)
-    const destroyed = await service.deleteItemByProductID(productID)
+    const maHangMuc = String(req.params.maHangMuc)
+    const destroyed = await service.deleteItemByPk(maHangMuc)
     return res.formatter.ok({ message: destroyed.message })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })

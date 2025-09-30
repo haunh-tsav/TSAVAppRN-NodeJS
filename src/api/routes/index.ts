@@ -1,28 +1,9 @@
-import accessoryNoteRoute from '@/routes/accessory-note.route'
-import authRoute from '@/routes/auth/auth.route'
-import colorRoute from '@/routes/color.route'
-import completionRoute from '@/routes/completion.route'
-import cuttingGroupRoute from '@/routes/cutting-group.route'
-import garmentAccessoryNoteRoute from '@/routes/garment-accessory-note.route'
-import garmentAccessoryRoute from '@/routes/garment-accessory.route'
-import groupRoute from '@/routes/group.route'
-import importationRoute from '@/routes/importation.route'
-import printRoute from '@/routes/print.route'
-import printablePlaceRoute from '@/routes/printable-place.route'
-import productColorRoute from '@/routes/product-color.route'
-import productGroupRoute from '@/routes/product-group.route'
-import productRoute from '@/routes/product.route'
-import roleRoute from '@/routes/role.route'
-import sampleSewingRoute from '@/routes/sample-sewing.route'
-import sewingLineDeliveryRoute from '@/routes/sewing-line-delivery.route'
-import sewingLineRoute from '@/routes/sewing-line.route'
-import userRoleRoute from '@/routes/user-role.route'
-import userRoute from '@/routes/user.route'
+import hangMucRoute from '@/routes/hang_muc.route'
 import { Router } from 'express'
 
 const router = Router()
 
-router.use('/hang-muc', authRoute)
+router.use('/hang_muc', hangMucRoute)
 // router.use('/auth', authRoute)
 // router.use('/users', userRoute)
 // router.use('/roles', roleRoute)

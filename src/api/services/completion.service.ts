@@ -1,4 +1,4 @@
-import CompletionSchema, { Completion } from '@/models/completion.model'
+import CompletionSchema, { Completion } from '@/api/models/completion.model'
 import { RequestBodyType } from '@/type'
 import { dynamicQuery } from '../helpers/query'
 import ProductSchema from '../models/product.model'

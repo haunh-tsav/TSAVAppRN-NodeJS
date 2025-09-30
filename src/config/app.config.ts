@@ -5,6 +5,7 @@ dotenv.config()
 
 const appConfig = {
   // Môi trường hoạt động của app
+  // 'development' | 'production'
   env: process.env.NODE_ENV || 'development',
 
   // Cấu hình server
