@@ -7,5 +7,3 @@ certs/
 package-lock.json
 
 logs.log
-
-*.env
