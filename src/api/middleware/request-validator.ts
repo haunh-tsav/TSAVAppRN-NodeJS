@@ -1,115 +1,101 @@
 import { NextFunction, Request, Response } from 'express'
 import { Location, ValidationChain, body, cookie, header, param, query, validationResult } from 'express-validator'
 
-type RuleType = {
+// Định nghĩa RuleType, có thể mở rộng thêm
+export type RuleType = {
   field: string
   location: Location
   type: 'string' | 'int' | 'float' | 'date' | 'boolean' | 'object' | 'array' | 'email'
-  required?: boolean | null
+  required?: boolean // Mặc định là true
 }
 
+// Hàm factory chính, trả về một middleware duy nhất
 const validationRules = (rules: RuleType[]) => {
-  const smartRenderValidationChain = (rule: RuleType): ValidationChain => {
+  // Hàm này sẽ xây dựng một chuỗi validation hoàn chỉnh cho một rule
+  const buildValidationChain = (rule: RuleType): ValidationChain => {
+    // 1. Xác định vị trí của field (body, query, params, etc.)
+    let chain: ValidationChain
     switch (rule.location) {
       case 'body':
-        return customValidators(rule, body(rule.field))
+        chain = body(rule.field)
+        break
       case 'cookies':
-        return customValidators(rule, cookie(rule.field))
+        chain = cookie(rule.field)
+        break
       case 'headers':
-        return customValidators(rule, header(rule.field))
+        chain = header(rule.field)
+        break
       case 'params':
-        return customValidators(rule, param(rule.field))
-      default:
-        return customValidators(rule, query(rule.field))
+        chain = param(rule.field)
+        break
+      default: // Mặc định là 'query'
+        chain = query(rule.field)
+        break
     }
-  }
 
-  const customValidators = (rule: RuleType, validationChain: ValidationChain): ValidationChain => {
+    // 2. ✅ Xử lý 'required' một lần duy nhất
+    if (rule.required === false) {
+      // Nếu không bắt buộc, dùng .optional()
+      chain = chain.optional()
+    } else {
+      // Nếu bắt buộc (mặc định), kiểm tra tồn tại và không rỗng
+      chain = chain
+        .exists()
+        .withMessage(`${rule.field} is required`)
+        .notEmpty()
+        .withMessage(`${rule.field} cannot be empty`)
+    }
+
+    // 3. ✅ Áp dụng validator và sanitizer dựa trên 'type'
     switch (rule.type) {
       case 'string':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
+        chain = chain
           .isString()
-          .withMessage('Field must be string type!')
+          .withMessage(`${rule.field} must be a string`)
+          .trim() // Làm sạch khoảng trắng
+          .escape() // Chống tấn công XSS
+        break
       case 'email':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isString()
-          .withMessage('Field must be string type!')
-          .isEmail()
-          .withMessage('Field is not valid email type!')
+        chain = chain.isEmail().withMessage(`${rule.field} must be a valid email`).normalizeEmail() // Chuẩn hóa email
+        break
       case 'int':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isInt()
-          .withMessage('Field must be int type!')
+        chain = chain.isInt().withMessage(`${rule.field} must be an integer`)
+        break
       case 'float':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isFloat()
-          .withMessage('Field must be float type!')
+        chain = chain.isFloat().withMessage(`${rule.field} must be a float`)
+        break
       case 'boolean':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isBoolean()
-          .withMessage('Field must be boolean type!')
+        chain = chain.isBoolean().withMessage(`${rule.field} must be a boolean`)
+        break
       case 'date':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isString()
-          .withMessage('Field must be date type!')
+        chain = chain.isISO8601().toDate().withMessage(`${rule.field} must be a valid date (YYYY-MM-DD)`)
+        break
       case 'array':
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isArray()
-          .withMessage('Field must be array type!')
-      default:
-        return validationChain
-          .exists()
-          .withMessage('Field is not exist!')
-          .notEmpty()
-          .withMessage('Field is not empty!')
-          .isObject()
-          .withMessage('Field must be object type!')
+        chain = chain.isArray().withMessage(`${rule.field} must be an array`)
+        break
+      case 'object':
+        chain = chain.isObject().withMessage(`${rule.field} must be an object`)
+        break
     }
+
+    return chain
   }
 
+  // Middleware chính sẽ được Express sử dụng
   return async (req: Request, res: Response, next: NextFunction) => {
-    // Áp dụng các quy tắc xác nhận cho từng trường
-    await Promise.all(rules.map((rule) => smartRenderValidationChain(rule).run(req)))
+    // Chạy tất cả các chuỗi validation song song
+    await Promise.all(rules.map((rule) => buildValidationChain(rule).run(req)))
 
     const errors = validationResult(req)
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        isSuccess: false,
-        message: 'Error validate request',
-        errors: errors.array()
-      })
+    if (errors.isEmpty()) {
+      return next() // Không có lỗi, đi tiếp
     }
 
-    next()
+    // Có lỗi, trả về response 400
+    res.status(400).json({
+      message: 'Validation failed',
+      errors: errors.mapped()
+    })
   }
 }
 

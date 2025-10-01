@@ -1,14 +1,22 @@
-import * as controller from '@/controllers/completion.controller'
+import * as controller from '@/controllers/hang_muc.controller'
 import validationRules from '@/middleware/request-validator'
 import { Router } from 'express'
+import { authentication } from '../middleware/auth.middleware'
 
 const router = Router()
 
-router.post('/', validationRules([{ field: 'maHangMuc', type: 'string', location: 'body' }]), controller.createNewItem)
+router.post(
+  '/',
+  validationRules([
+    { field: 'maHangMuc', type: 'string', location: 'body' },
+    { field: 'tenHangMuc', type: 'string', location: 'body' }
+  ]),
+  controller.createNewItem
+)
 
 // Get one item
 router.get(
-  '/:maHangMuc',
+  '/find/:maHangMuc',
   validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
   controller.getItemByPk
 )
@@ -27,7 +35,7 @@ router.post(
 
 // Update item (Fields)
 router.patch(
-  '/:maHangMuc',
+  '/find/:maHangMuc',
   validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
   controller.updateItemByPk
 )

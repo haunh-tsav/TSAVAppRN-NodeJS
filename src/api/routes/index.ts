@@ -1,9 +1,10 @@
+import { authentication } from '@/api/middleware/auth.middleware'
 import hangMucRoute from '@/routes/hang_muc.route'
 import { Router } from 'express'
 
 const router = Router()
 
-router.use('/hang_muc', hangMucRoute)
+router.use('/hang-muc', authentication, hangMucRoute)
 // router.use('/auth', authRoute)
 // router.use('/users', userRoute)
 // router.use('/roles', roleRoute)

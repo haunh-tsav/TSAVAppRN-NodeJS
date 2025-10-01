@@ -1,5 +1,3 @@
-export type ItemStatusType = 'active' | 'deleted' | 'pending'
-
 export type UserRoleType =
   | 'admin'
   | 'product_manager'
@@ -13,7 +11,6 @@ export type UserRoleType =
 
 export type RequestBodyType = {
   filter: {
-    status: ItemStatusType[]
     field: string
     items: number[] // items: mảng id : default -1: Lấy tất cả post
   }
@@ -26,7 +23,7 @@ export type RequestBodyType = {
     term: string
   }
   sorting: {
-    column: string // id
+    column: string // Ví dụ: Id
     direction: 'asc' | 'desc' // direction: asc|desc sắp xếp trước sau
   }
 }

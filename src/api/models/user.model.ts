@@ -1,4 +1,3 @@
-import { ItemStatusType } from '@/type'
 import { Column, DataType, Model, Table } from 'sequelize-typescript'
 
 const { INTEGER, STRING, BOOLEAN } = DataType
@@ -15,7 +14,6 @@ export interface User {
   accessKey?: string | null
   workDescription?: string | null
   birthday?: string | null
-  status?: ItemStatusType
 }
 
 @Table({
@@ -56,7 +54,4 @@ export default class UserSchema extends Model<User> {
 
   @Column({ type: STRING, field: 'birthday' })
   declare birthday: string
-
-  @Column({ type: STRING(45), field: 'status' })
-  declare status: ItemStatusType
 }

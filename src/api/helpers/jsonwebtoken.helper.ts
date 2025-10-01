@@ -2,7 +2,7 @@ import appConfig from '@/config/app.config'
 import 'dotenv/config'
 import jwt, { JwtPayload, VerifyCallback, VerifyOptions } from 'jsonwebtoken'
 
-type SecretType = 'access_token' | 'refresh_token'
+type SecretType = 'accessToken' | 'refreshToken'
 
 export type ExpiresType = 'minutes' | 'hour' | 'day' | 'year'
 
@@ -14,12 +14,12 @@ export interface JwtConfig {
 
 export const jwtConfig: { accessToken: JwtConfig; refreshToken: JwtConfig } = {
   accessToken: {
-    secret: appConfig.secret.accessKey,
+    secret: appConfig.security.jwt_secret,
     expiresIn: 1,
     expiresType: 'minutes'
   },
   refreshToken: {
-    secret: appConfig.secret.accessKey,
+    secret: appConfig.security.jwt_secret,
     expiresIn: 2,
     expiresType: 'minutes'
   }
@@ -51,31 +51,22 @@ export const generateToken = (payload: string | object | Buffer, secretType: Sec
   // )
   const token = jwt.sign(
     payload,
-    secretType === 'access_token' ? jwtConfig.accessToken.secret : jwtConfig.refreshToken.secret
+    secretType === 'accessToken' ? jwtConfig.accessToken.secret : jwtConfig.refreshToken.secret
   )
   return token
 }
 
-export const verifyToken = (
-  token: string,
-  secretType: SecretType,
-  options?: VerifyOptions & { complete?: false }
-): string | jwt.JwtPayload => {
-  return jwt.verify(
-    token,
-    secretType === 'access_token' ? jwtConfig.accessToken.secret : jwtConfig.refreshToken.secret,
-    options
-  )
-}
-
-export const verifyTokenSync = (
-  token: string,
-  secretType: SecretType,
-  callback?: VerifyCallback<JwtPayload | string>
-) => {
+/**
+ *
+ * Verify token (accessToken + refreshToken)
+ * @param token string
+ * @param secretType SecretType
+ * @param callback VerifyCallback<JwtPayload | string> (optional)
+ */
+export const verifyToken = (token: string, secretType: SecretType, callback?: VerifyCallback<JwtPayload | string>) => {
   jwt.verify(
     token,
-    secretType === 'access_token' ? jwtConfig.accessToken.secret : jwtConfig.refreshToken.secret,
+    secretType === 'accessToken' ? jwtConfig.accessToken.secret : jwtConfig.refreshToken.secret,
     callback
   )
 }

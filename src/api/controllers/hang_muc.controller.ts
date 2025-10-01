@@ -3,13 +3,12 @@ import * as service from '@/services/hang_muc.service'
 import { RequestBodyType } from '@/type'
 import { NextFunction, Request, Response } from 'express'
 
-const NAMESPACE = 'controllers/hang_muc'
+const NAMESPACE = 'controllers/hang-muc'
 
 export const createNewItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const dataRequest: HangMuc = {
-      ...req.body,
-      status: req.body.status ?? 'active'
+      ...req.body
     }
     const newItem = await service.createNewItem(dataRequest)
     return res.formatter.created({ data: newItem })
@@ -24,7 +23,7 @@ export const getItemByPk = async (req: Request, res: Response, next: NextFunctio
     const itemFound = await service.getItemByPk(maHangMuc)
     return res.formatter.ok({ data: itemFound })
   } catch (error: any) {
-    return res.formatter.badRequest({ message: error })
+    return res.formatter.notFound({ message: error })
   }
 }
 
@@ -36,7 +35,7 @@ export const getItems = async (req: Request, res: Response, next: NextFunction) 
     const items = await service.getItems(bodyRequest)
     const countAll = await service.getItems({
       ...bodyRequest,
-      filter: { status: ['active'], field: 'id', items: [-1] }
+      filter: { field: 'maHangMuc', items: [-1] }
     })
     return res.formatter.ok({
       data: items.rows,
@@ -53,11 +52,11 @@ export const getItems = async (req: Request, res: Response, next: NextFunction) 
 export const updateItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const maHangMuc = String(req.params.maHangMuc)
-    const itemRequest: HangMuc = {
+    const itemToUpdate: HangMuc = {
       ...req.body
     }
-    const itemUpdated = await service.updateItemByPk(maHangMuc, itemRequest)
-    return res.formatter.ok({ data: itemUpdated })
+    const itemUpdated = await service.updateItemByPk(maHangMuc, itemToUpdate)
+    return res.formatter.ok({ message: 'Item updated successfully!', data: itemUpdated })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })
   }

@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
 import { Column, Model, Table } from 'sequelize-typescript'
 
-const { INTEGER, STRING, FLOAT } = DataTypes
+const { INTEGER, STRING } = DataTypes
 
 export type HangMuc = {
   maHangMuc: string
@@ -16,10 +16,10 @@ export type HangMuc = {
 @Table({
   modelName: 'HangMuc',
   tableName: 'HangMuc',
-  timestamps: true
+  timestamps: false
 })
 export default class HangMucSchema extends Model<HangMuc> {
-  @Column({ type: STRING(50), primaryKey: true, field: 'MaHangMuc' })
+  @Column({ type: STRING(50), primaryKey: true, field: 'MaHangMuc', unique: true })
   declare maHangMuc: string
 
   @Column({ type: STRING(500), field: 'TenHangMuc' })

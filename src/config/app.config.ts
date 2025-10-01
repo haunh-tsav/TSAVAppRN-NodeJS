@@ -22,8 +22,12 @@ const appConfig = {
     db_host: process.env.DB_HOST ?? '',
     db_port: process.env.DB_PORT ?? '',
     username: process.env.DB_USERNAME ?? '',
-    password: 'sg6H625#51',
+    password: 'sg6H625#51!',
     db_name: process.env.DB_NAME ?? ''
+  },
+
+  security: {
+    jwt_secret: process.env.JWT_SECRET || 'a-very-weak-default-secret-key'
   }
 }
 
