@@ -1,32 +1,37 @@
-import { Sequelize } from 'sequelize-typescript'
 // src/config/database.config.ts
 
-import HangMucSchema from '@/api/models/hang_muc.model'
-import appConfig from './app.config' // ✅ Import từ appConfig
+import { Sequelize } from 'sequelize-typescript'
+import appConfig from './app.config'
+
+console.log('--- DEBUG: DATABASE CONFIG ---')
+console.log('HOST:', appConfig.database.db_host)
+console.log('USER:', appConfig.database.username)
+console.log('PASS:', appConfig.database.password)
+console.log('DB_NAME:', appConfig.database.db_name)
+console.log('----------------------------')
 
 const sequelize = new Sequelize(
   appConfig.database.db_name,
   appConfig.database.username,
-  encodeURIComponent(appConfig.database.password || ''),
+  // Mã hóa password vẫn là một bước quan trọng và nên giữ lại
+  appConfig.database.password || '',
   {
-    // ✅ Lấy thông tin kết nối từ appConfig, không đọc process.env nữa
     host: appConfig.database.db_host,
-    port: parseInt(appConfig.database.db_port || '1433'), // ✅ Sửa port mặc định
+    port: parseInt(appConfig.database.db_port || '1433'),
     dialect: 'mssql',
+
     dialectOptions: {
-      // Tăng thời gian chờ cho việc thiết lập kết nối ban đầu lên 60 giây
-      connectTimeout: 10000, // 60000ms = 60 giây
-      // Options specific to the mssql dialect (tedious)
       options: {
-        // Nếu server của bạn không dùng SSL, encrypt=false.
-        // Đối với Azure SQL hoặc các server yêu cầu SSL, đặt là true.
         encrypt: false,
-        trustServerCertificate: true // Change to false if you have a valid SSL certificate
+        trustServerCertificate: true
       }
     },
-    models: [HangMucSchema],
 
-    logging: false, // Tắt logging ở đây để tránh nhiễu, server.ts đã log rồi
+    // ✅ SỬA LỖI 2: Tự động tìm và nạp tất cả các model
+    // Sequelize sẽ tìm tất cả các file có đuôi .model.ts trong thư mục models.
+    models: [__dirname + '/../api/models/**/*.model.ts'],
+
+    logging: false,
 
     pool: {
       max: 10,
@@ -41,13 +46,6 @@ const sequelize = new Sequelize(
   }
 )
 
-// ✅ Xóa bỏ khối sequelize.authenticate() ở đây
-async function syncModels() {
-  await sequelize.sync({ alter: true }) // 'alter: true' modifies existing tables
-  console.log('Models synchronized with the database.')
-}
-
-// Call syncModels after authentication, or as part of your application setup
-syncModels()
+// ✅ SỬA LỖI 1: Xóa bỏ hoàn toàn hàm syncModels() và lệnh gọi nó ở đây.
 
 export default sequelize

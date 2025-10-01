@@ -15,7 +15,7 @@ export type HangMuc = {
 
 @Table({
   modelName: 'HangMuc',
-  tableName: 'dbo.HangMuc',
+  tableName: 'HangMuc',
   timestamps: true
 })
 export default class HangMucSchema extends Model<HangMuc> {

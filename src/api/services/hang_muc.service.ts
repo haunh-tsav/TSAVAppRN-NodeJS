@@ -2,7 +2,7 @@ import HangMucSchema, { HangMuc } from '@/api/models/hang_muc.model'
 import { RequestBodyType } from '@/type'
 import { dynamicQuery } from '../helpers/query'
 
-const NAMESPACE = 'services/completion'
+const NAMESPACE = 'services/hang_muc'
 
 export const createNewItem = async (item: HangMuc) => {
   try {

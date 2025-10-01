@@ -13,12 +13,6 @@ const NAMESPACE = 'Server'
 
 const startServer = async () => {
   try {
-    // Log cấu hình database một cách an toàn
-    const dbConfigForLogging = {
-      ...appConfig.database
-    }
-    logging.info(NAMESPACE, `Attempting to connect to database with config:`, dbConfigForLogging)
-
     // ✅ Đơn giản hóa: await sẽ xử lý promise. Nếu lỗi, catch sẽ bắt.
     await sequelize.authenticate()
     logging.info(NAMESPACE, 'Database connection has been established successfully. 🥳🎉')

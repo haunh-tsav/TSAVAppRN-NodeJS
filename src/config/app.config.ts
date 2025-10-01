@@ -22,7 +22,7 @@ const appConfig = {
     db_host: process.env.DB_HOST ?? '',
     db_port: process.env.DB_PORT ?? '',
     username: process.env.DB_USERNAME ?? '',
-    password: process.env.DB_PASSWORD ?? '',
+    password: 'sg6H625#51',
     db_name: process.env.DB_NAME ?? ''
   }
 }
