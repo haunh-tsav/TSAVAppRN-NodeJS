@@ -1,4 +1,4 @@
-import * as controller from '@/controllers/hang_muc.controller'
+import * as controller from '@/api/controllers/HangMuc.controller'
 import validationRules from '@/middleware/request-validator'
 import { Router } from 'express'
 import { authentication } from '../middleware/auth.middleware'

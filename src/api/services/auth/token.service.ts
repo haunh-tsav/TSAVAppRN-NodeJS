@@ -1,6 +1,6 @@
 import { dateFormatterToString, expiresDateFormJWTConfig } from '@/api/helpers/date.helper'
 import { decodeToken, generateToken, jwtConfig, verifyToken } from '@/api/helpers/jsonwebtoken.helper'
-import TokenSchema from '@/models/token.model'
+import TokenSchema from '@/api/schemas/token.schema'
 import { Op } from 'sequelize'
 
 const NAMESPACE = 'services/token'

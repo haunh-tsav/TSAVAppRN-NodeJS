@@ -1,4 +1,4 @@
-import { User } from '@/models/user.model'
+import { User } from '@/api/schemas/user.schema'
 import * as service from '@/services/user.service'
 import { RequestBodyType } from '@/type'
 import { NextFunction, Request, Response } from 'express'

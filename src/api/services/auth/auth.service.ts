@@ -2,9 +2,9 @@
 import { decodeToken } from '@/api/helpers/jsonwebtoken.helper'
 import RoleSchema from '@/api/models/role.model'
 import UserRoleSchema from '@/api/models/user-role.model'
+import UserSchema from '@/api/schemas/user.schema'
 import { codeGenerator, otpGenerator } from '@/api/utils'
 import { mailOptionVerifyOTPCode, transporter } from '@/config/nodemailer.config'
-import UserSchema from '@/models/user.model'
 import * as tokenService from '@/services/auth/token.service'
 
 const NAMESPACE = 'Auth'

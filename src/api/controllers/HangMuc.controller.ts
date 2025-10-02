@@ -1,5 +1,5 @@
-import { HangMuc } from '@/api/models/hang_muc.model'
-import * as service from '@/services/hang_muc.service'
+import { HangMuc } from '@/api/schemas/HangMuc.schema'
+import * as service from '@/api/services/HangMuc.service'
 import { RequestBodyType } from '@/type'
 import { NextFunction, Request, Response } from 'express'
 

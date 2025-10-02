@@ -1,4 +1,4 @@
-import HangMucSchema, { HangMuc } from '@/api/models/hang_muc.model'
+import HangMucSchema, { HangMuc } from '@/api/schemas/HangMuc.schema'
 import { RequestBodyType } from '@/type'
 import { dynamicQuery } from '../helpers/query'
 

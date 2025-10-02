@@ -1,5 +1,5 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
-import UserSchema from './user.model'
+import UserSchema from './user.schema'
 
 const { INTEGER, STRING, DATE } = DataType
 

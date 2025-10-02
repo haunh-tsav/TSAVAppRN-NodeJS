@@ -1,10 +1,10 @@
+import UserSchema, { User } from '@/api/schemas/user.schema'
 import appConfig from '@/config/app.config'
 import { mailOptionToSendUserInfo, transporter } from '@/config/nodemailer.config'
 import { getItemsQuery } from '@/helpers/query'
-import UserSchema, { User } from '@/models/user.model'
 import { RequestBodyType } from '@/type'
-import TokenSchema from '../models/token.model'
-import UserRoleSchema from '../models/user-role.model'
+import TokenSchema from '../schemas/token.schema'
+import UserRoleSchema from '../schemas/user-role.model'
 
 const NAMESPACE = 'services/user'
 
