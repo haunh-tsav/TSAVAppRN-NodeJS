@@ -16,9 +16,9 @@ export const createNewItem = async (item: NhanVien) => {
 }
 
 // Get by id
-export const getItemByPk = async (maNhanVien: string) => {
+export const getItemByPk = async (maNV: string) => {
   try {
-    const itemFound = await NhanVienSchema.findByPk(maNhanVien)
+    const itemFound = await NhanVienSchema.findByPk(maNV)
     if (!itemFound) throw new Error(`Item not found!`)
     return itemFound
   } catch (error: any) {
@@ -28,7 +28,7 @@ export const getItemByPk = async (maNhanVien: string) => {
 
 // Get all
 export const getItems = async (body: RequestBodyType) => {
-  const sortingColumn = body.sorting.column !== '' ? body.sorting.column : 'stt'
+  const sortingColumn = body.sorting.column !== '' ? body.sorting.column : 'maNV'
   const sortingDirection = body.sorting.direction || 'asc'
 
   try {

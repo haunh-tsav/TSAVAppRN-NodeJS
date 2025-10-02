@@ -1,4 +1,5 @@
 import BoPhanSchema from '@/api/schemas/BoPhan.schema'
+import MaXuongSchema from '@/api/schemas/MaXuong.schema'
 import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
 
 const { INTEGER, STRING, BOOLEAN } = DataType
@@ -31,6 +32,7 @@ export default class NhanVienSchema extends Model<NhanVien> {
   declare maBP: string
 
   @Column({ type: STRING(50), field: 'MaXuong' })
+  @ForeignKey(() => MaXuongSchema)
   declare maXuong: string
 
   @Column({ type: STRING(50), field: 'Loai' })

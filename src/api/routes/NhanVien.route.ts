@@ -1,7 +1,6 @@
 import * as controller from '@/api/controllers/NhanVien.controller'
 import validationRules from '@/middleware/request-validator'
 import { Router } from 'express'
-import { authentication } from '../middleware/auth.middleware'
 
 const router = Router()
 
@@ -10,7 +9,8 @@ router.post(
   validationRules([
     { field: 'maNV', type: 'string', location: 'body' },
     { field: 'hoTen', type: 'string', location: 'body' },
-    { field: 'maBP', type: 'string', location: 'body' }
+    { field: 'maBP', type: 'string', location: 'body' },
+    { field: 'maXuong', type: 'string', location: 'body' }
   ]),
   controller.createNewItem
 )
@@ -43,7 +43,7 @@ router.patch(
 
 // Delete item
 router.delete(
-  '/:maNV',
+  '/find/:maNV',
   validationRules([{ field: 'maNV', type: 'string', location: 'params' }]),
   controller.deleteItemByPk
 )
