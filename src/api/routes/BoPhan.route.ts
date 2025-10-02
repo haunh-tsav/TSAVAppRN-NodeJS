@@ -8,7 +8,7 @@ router.post(
   '/',
   validationRules([
     { field: 'maBP', type: 'string', location: 'body' },
-    { field: 'hoTen', type: 'string', location: 'body' },
+    { field: 'tenBP', type: 'string', location: 'body' },
     { field: 'maXuong', type: 'string', location: 'body' },
     { field: 'isLine', type: 'boolean', location: 'body' },
     { field: 'useBudget', type: 'boolean', location: 'body' }
@@ -44,7 +44,7 @@ router.patch(
 
 // Delete item
 router.delete(
-  '/:maBP',
+  '/find/:maBP',
   validationRules([{ field: 'maBP', type: 'string', location: 'params' }]),
   controller.deleteItemByPk
 )
