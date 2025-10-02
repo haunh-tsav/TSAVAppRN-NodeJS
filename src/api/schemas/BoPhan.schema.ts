@@ -1,5 +1,6 @@
+import MaXuongSchema from '@/api/schemas/MaXuong.schema'
 import { DataTypes } from 'sequelize'
-import { Column, Model, Table } from 'sequelize-typescript'
+import { Column, ForeignKey, Model, Table } from 'sequelize-typescript'
 
 const { INTEGER, STRING, TINYINT } = DataTypes
 
@@ -32,6 +33,7 @@ export default class BoPhanSchema extends Model<BoPhan> {
   declare stt: number
 
   @Column({ type: STRING(50), field: 'MaXuong' })
+  @ForeignKey(() => MaXuongSchema)
   declare maXuong: string
 
   @Column({ type: TINYINT, field: 'IsLine' })
