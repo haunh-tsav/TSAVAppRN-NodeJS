@@ -29,7 +29,7 @@ const sequelize = new Sequelize(
 
     // ✅ SỬA LỖI 2: Tự động tìm và nạp tất cả các model
     // Sequelize sẽ tìm tất cả các file có đuôi .model.ts trong thư mục models.
-    models: [__dirname + '/../api/models/**/*.model.ts'],
+    models: [__dirname + '/../api/schemas/**/*.schema.ts'],
 
     logging: false,
 

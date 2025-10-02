@@ -1,4 +1,4 @@
-import * as controller from '@/api/controllers/HangMuc.controller'
+import * as controller from '@/api/controllers/BoPhan.controller'
 import validationRules from '@/middleware/request-validator'
 import { Router } from 'express'
 
@@ -7,16 +7,19 @@ const router = Router()
 router.post(
   '/',
   validationRules([
-    { field: 'maHangMuc', type: 'string', location: 'body' },
-    { field: 'tenHangMuc', type: 'string', location: 'body' }
+    { field: 'maBP', type: 'string', location: 'body' },
+    { field: 'hoTen', type: 'string', location: 'body' },
+    { field: 'maXuong', type: 'string', location: 'body' },
+    { field: 'isLine', type: 'boolean', location: 'body' },
+    { field: 'useBudget', type: 'boolean', location: 'body' }
   ]),
   controller.createNewItem
 )
 
 // Get one item
 router.get(
-  '/find/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maBP',
+  validationRules([{ field: 'maBP', type: 'string', location: 'params' }]),
   controller.getItemByPk
 )
 
@@ -34,15 +37,15 @@ router.post(
 
 // Update item (Fields)
 router.patch(
-  '/find/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maBP',
+  validationRules([{ field: 'maBP', type: 'string', location: 'params' }]),
   controller.updateItemByPk
 )
 
 // Delete item
 router.delete(
-  '/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/:maBP',
+  validationRules([{ field: 'maBP', type: 'string', location: 'params' }]),
   controller.deleteItemByPk
 )
 

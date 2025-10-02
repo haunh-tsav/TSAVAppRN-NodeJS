@@ -1,22 +1,24 @@
-import * as controller from '@/api/controllers/HangMuc.controller'
+import * as controller from '@/api/controllers/NhanVien.controller'
 import validationRules from '@/middleware/request-validator'
 import { Router } from 'express'
+import { authentication } from '../middleware/auth.middleware'
 
 const router = Router()
 
 router.post(
   '/',
   validationRules([
-    { field: 'maHangMuc', type: 'string', location: 'body' },
-    { field: 'tenHangMuc', type: 'string', location: 'body' }
+    { field: 'maNV', type: 'string', location: 'body' },
+    { field: 'hoTen', type: 'string', location: 'body' },
+    { field: 'maBP', type: 'string', location: 'body' }
   ]),
   controller.createNewItem
 )
 
 // Get one item
 router.get(
-  '/find/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maNV',
+  validationRules([{ field: 'maNV', type: 'string', location: 'params' }]),
   controller.getItemByPk
 )
 
@@ -34,15 +36,15 @@ router.post(
 
 // Update item (Fields)
 router.patch(
-  '/find/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maNV',
+  validationRules([{ field: 'maNV', type: 'string', location: 'params' }]),
   controller.updateItemByPk
 )
 
 // Delete item
 router.delete(
-  '/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/:maNV',
+  validationRules([{ field: 'maNV', type: 'string', location: 'params' }]),
   controller.deleteItemByPk
 )
 

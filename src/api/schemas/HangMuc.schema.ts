@@ -16,7 +16,7 @@ export type HangMuc = {
 @Table({
   modelName: 'HangMuc',
   tableName: 'HangMuc',
-  timestamps: false
+  timestamps: false // Required to set "false"
 })
 export default class HangMucSchema extends Model<HangMuc> {
   @Column({ type: STRING(50), primaryKey: true, field: 'MaHangMuc', unique: true })

@@ -1,5 +1,5 @@
 {
-  "window.zoomLevel": 0.5,
+  "window.zoomLevel": 1,
   "editor.formatOnSave": true,
   "[javascript]": { "editor.formatOnSave": true },
   "[typescript]": { "editor.formatOnSave": true },

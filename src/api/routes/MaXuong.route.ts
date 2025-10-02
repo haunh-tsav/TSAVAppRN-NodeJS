@@ -1,4 +1,4 @@
-import * as controller from '@/api/controllers/HangMuc.controller'
+import * as controller from '@/api/controllers/MaXuong.controller'
 import validationRules from '@/middleware/request-validator'
 import { Router } from 'express'
 
@@ -7,16 +7,16 @@ const router = Router()
 router.post(
   '/',
   validationRules([
-    { field: 'maHangMuc', type: 'string', location: 'body' },
-    { field: 'tenHangMuc', type: 'string', location: 'body' }
+    { field: 'maXuong', type: 'string', location: 'body' },
+    { field: 'tenXuong', type: 'string', location: 'body' }
   ]),
   controller.createNewItem
 )
 
 // Get one item
 router.get(
-  '/find/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maXuong',
+  validationRules([{ field: 'maXuong', type: 'string', location: 'params' }]),
   controller.getItemByPk
 )
 
@@ -34,15 +34,15 @@ router.post(
 
 // Update item (Fields)
 router.patch(
-  '/find/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maXuong',
+  validationRules([{ field: 'maXuong', type: 'string', location: 'params' }]),
   controller.updateItemByPk
 )
 
 // Delete item
 router.delete(
-  '/:maHangMuc',
-  validationRules([{ field: 'maHangMuc', type: 'string', location: 'params' }]),
+  '/find/:maXuong',
+  validationRules([{ field: 'maXuong', type: 'string', location: 'params' }]),
   controller.deleteItemByPk
 )
 
