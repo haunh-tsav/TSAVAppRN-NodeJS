@@ -6,7 +6,7 @@ const NAMESPACE = 'services/bo-phan'
 
 export const createNewItem = async (item: BoPhan) => {
   try {
-    const itemFound = await BoPhanSchema.findOne({ where: { maBP: item.maBP } })
+    const itemFound = await BoPhanSchema.findByPk(item.maBP)
     if (itemFound) throw new Error('Item already exist!')
     const maxStt = await BoPhanSchema.max<number, BoPhanSchema>('stt')
     const nextStt = (maxStt || 0) + 1

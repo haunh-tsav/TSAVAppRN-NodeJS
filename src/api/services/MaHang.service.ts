@@ -6,7 +6,7 @@ const NAMESPACE = 'services/ma-hang'
 
 export const createNewItem = async (item: MaHang) => {
   try {
-    const itemFound = await MaHangSchema.findOne({ where: { maHang: item.maHang } })
+    const itemFound = await MaHangSchema.findByPk(item.maHang)
     if (itemFound) throw new Error('Item already exist!')
     const maxStt = await MaHangSchema.max<number, MaHangSchema>('stt')
     const nextStt = (maxStt || 0) + 1

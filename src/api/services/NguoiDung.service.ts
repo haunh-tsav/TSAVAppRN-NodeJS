@@ -6,7 +6,7 @@ const NAMESPACE = 'services/nguoi-dung'
 
 export const createNewItem = async (item: NguoiDung) => {
   try {
-    const itemFound = await NguoiDungSchema.findOne({ where: { tenDangNhap: item.tenDangNhap } })
+    const itemFound = await NguoiDungSchema.findByPk(item.tenDangNhap)
     if (itemFound) throw new Error('Item already exist!')
     const itemCreated = await NguoiDungSchema.create(item)
     return itemCreated

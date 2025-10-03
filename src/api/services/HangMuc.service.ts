@@ -6,7 +6,7 @@ const NAMESPACE = 'services/hang-muc'
 
 export const createNewItem = async (item: HangMuc) => {
   try {
-    const itemFound = await HangMucSchema.findOne({ where: { maHangMuc: item.maHangMuc } })
+    const itemFound = await HangMucSchema.findByPk(item.maHangMuc)
     if (itemFound) throw new Error('Item already exist!')
     const maxStt = await HangMucSchema.max<number, HangMucSchema>('stt')
     const nextStt = (maxStt || 0) + 1

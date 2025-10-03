@@ -6,7 +6,7 @@ const NAMESPACE = 'services/nhan-vien'
 
 export const createNewItem = async (item: NhanVien) => {
   try {
-    const itemFound = await NhanVienSchema.findOne({ where: { maNV: item.maNV } })
+    const itemFound = await NhanVienSchema.findByPk(item.maNV)
     if (itemFound) throw new Error('Item already exist!')
     const itemCreated = await NhanVienSchema.create(item)
     return itemCreated
