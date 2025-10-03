@@ -5,6 +5,18 @@ import { NextFunction, Request, Response } from 'express'
 
 const NAMESPACE = 'controllers/nguoi-dung'
 
+export const createNewItem = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const dataRequest: NguoiDung = {
+      ...req.body
+    }
+    const newItem = await service.createNewItem({ ...dataRequest, quanTri: dataRequest.quanTri ? 1 : 0 })
+    return res.formatter.created({ data: newItem })
+  } catch (error: any) {
+    return res.formatter.badRequest({ message: error })
+  } 
+}
+
 export const getItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const tenDangNhap = String(req.params.tenDangNhap)

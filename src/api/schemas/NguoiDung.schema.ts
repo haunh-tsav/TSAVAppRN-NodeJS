@@ -1,6 +1,7 @@
 import BoPhanSchema from '@/api/schemas/BoPhan.schema'
 import MaXuongSchema from '@/api/schemas/MaXuong.schema'
-import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
+import NhanVienSchema, { NhanVien } from '@/api/schemas/NhanVien.schema'
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
 
 const { TINYINT, STRING } = DataType
 
@@ -18,7 +19,7 @@ export interface NguoiDung {
   tableName: 'NguoiDung',
   timestamps: false // Required to set "false"
 })
-export default class NhanVienSchema extends Model<NguoiDung> {
+export default class NguoiDungSchema extends Model<NguoiDung> {
   @Column({ type: STRING(50), primaryKey: true, field: 'TenDangNhap', unique: true })
   declare tenDangNhap: string
 
@@ -32,7 +33,7 @@ export default class NhanVienSchema extends Model<NguoiDung> {
   @Column({ type: TINYINT, field: 'QuanTri' })
   declare quanTri: number
 
-  @Column({ type: STRING(50), field: 'MaBp' })
+  @Column({ type: STRING(50), field: 'MaBP' })
   @ForeignKey(() => BoPhanSchema)
   declare maBP: string
 

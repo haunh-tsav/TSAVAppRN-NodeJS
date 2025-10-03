@@ -4,10 +4,21 @@ import { dynamicQuery } from '../helpers/query'
 
 const NAMESPACE = 'services/nguoi-dung'
 
-// Get by id
-export const getItemByPk = async (maNV: string) => {
+export const createNewItem = async (item: NguoiDung) => {
   try {
-    const itemFound = await NguoiDungSchema.findByPk(maNV)
+    const itemFound = await NguoiDungSchema.findOne({ where: { tenDangNhap: item.tenDangNhap } })
+    if (itemFound) throw new Error('Item already exist!')
+    const itemCreated = await NguoiDungSchema.create(item)
+    return itemCreated
+  } catch (error: any) {
+    throw `${error.message}`
+  }
+}
+
+// Get by id
+export const getItemByPk = async (tenDangNhap: string) => {
+  try {
+    const itemFound = await NguoiDungSchema.findByPk(tenDangNhap)
     if (!itemFound) throw new Error(`Item not found!`)
     return itemFound
   } catch (error: any) {
@@ -34,9 +45,9 @@ export const getItems = async (body: RequestBodyType) => {
 }
 
 // Update
-export const updateItemByPk = async (maNV: string, itemToUpdate: NguoiDung) => {
+export const updateItemByPk = async (tenDangNhap: string, itemToUpdate: NguoiDung) => {
   try {
-    const itemFound = await NguoiDungSchema.findByPk(maNV)
+    const itemFound = await NguoiDungSchema.findByPk(tenDangNhap)
     if (!itemFound) throw new Error(`Item not found!`)
     const updatedItem = await itemFound.update(itemToUpdate)
     return updatedItem
@@ -46,9 +57,9 @@ export const updateItemByPk = async (maNV: string, itemToUpdate: NguoiDung) => {
 }
 
 // Delete
-export const deleteItemByPk = async (maNV: string) => {
+export const deleteItemByPk = async (tenDangNhap: string) => {
   try {
-    const itemFound = await NguoiDungSchema.findOne({ where: { maNV } })
+    const itemFound = await NguoiDungSchema.findOne({ where: { tenDangNhap } })
     if (!itemFound) throw new Error(`Item not found!`)
     await itemFound.destroy()
     return { message: 'Deleted successfully!' }

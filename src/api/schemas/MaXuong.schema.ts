@@ -13,7 +13,7 @@ export type MaXuong = {
   tableName: 'MaXuong',
   timestamps: false // Required to set "false"
 })
-export default class BoPhanSchema extends Model<MaXuong> {
+export default class MaXuongSchema extends Model<MaXuong> {
   @Column({ type: STRING(50), primaryKey: true, field: 'MaXuong', unique: true })
   declare maXuong: string
 

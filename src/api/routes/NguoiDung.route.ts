@@ -4,6 +4,19 @@ import { Router } from 'express'
 
 const router = Router()
 
+router.post(
+  '/',
+  validationRules([
+    { field: 'tenDangNhap', type: 'string', location: 'body' },
+    { field: 'matKhau', type: 'string', location: 'body' },
+    { field: 'maNV', type: 'string', location: 'body' },
+    { field: 'quanTri', type: 'boolean', location: 'body' },
+    { field: 'maBP', type: 'string', location: 'body' },
+    { field: 'maXuong', type: 'string', location: 'body' }
+  ]),
+  controller.createNewItem
+)
+
 // Get one item
 router.get(
   '/find/:tenDangNhap',
