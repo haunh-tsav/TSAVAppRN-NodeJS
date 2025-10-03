@@ -1,9 +1,11 @@
 import { authentication } from '@/api/middleware/auth.middleware'
 import boPhanRoute from '@/api/routes/BoPhan.route'
 import hangMucRoute from '@/api/routes/HangMuc.route'
+import maHangRoute from '@/api/routes/MaHang.route'
 import maXuongRoute from '@/api/routes/MaXuong.route'
 import nguoiDungRoute from '@/api/routes/NguoiDung.route'
 import nhanVienRoute from '@/api/routes/NhanVien.route'
+import soMayRoute from '@/api/routes/SoMay.route'
 import { Router } from 'express'
 
 const router = Router()
@@ -13,6 +15,8 @@ router.use('/ma-xuong', authentication, maXuongRoute)
 router.use('/bo-phan', authentication, boPhanRoute)
 router.use('/nhan-vien', authentication, nhanVienRoute)
 router.use('/nguoi-dung', authentication, nguoiDungRoute)
+router.use('/so-may', authentication, soMayRoute)
+router.use('/ma-hang', authentication, maHangRoute)
 // router.use('/auth', authRoute)
 // router.use('/users', userRoute)
 // router.use('/roles', roleRoute)

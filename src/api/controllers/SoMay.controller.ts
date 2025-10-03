@@ -1,16 +1,16 @@
-import { NguoiDung } from '@/api/schemas/NguoiDung.schema'
-import * as service from '@/api/services/NguoiDung.service'
+import { SoMay } from '@/api/schemas/SoMay.schema'
+import * as service from '@/api/services/SoMay.service'
 import { RequestBodyType } from '@/type'
 import { NextFunction, Request, Response } from 'express'
 
-const NAMESPACE = 'controllers/nguoi-dung'
+const NAMESPACE = 'controllers/so-may'
 
 export const createNewItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const dataRequest: NguoiDung = {
+    const dataRequest: SoMay = {
       ...req.body
     }
-    const newItem = await service.createNewItem({ ...dataRequest, quanTri: dataRequest.quanTri ? 1 : 0 })
+    const newItem = await service.createNewItem(dataRequest)
     return res.formatter.created({ data: newItem })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })
@@ -19,8 +19,8 @@ export const createNewItem = async (req: Request, res: Response, next: NextFunct
 
 export const getItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const tenDangNhap = String(req.params.tenDangNhap)
-    const itemFound = await service.getItemByPk(tenDangNhap)
+    const soMay = String(req.params.soMay)
+    const itemFound = await service.getItemByPk(soMay)
     return res.formatter.ok({ data: itemFound })
   } catch (error: any) {
     return res.formatter.notFound({ message: error })
@@ -35,7 +35,7 @@ export const getItems = async (req: Request, res: Response, next: NextFunction) 
     const items = await service.getItems(bodyRequest)
     const countAll = await service.getItems({
       ...bodyRequest,
-      filter: { field: 'tenDangNhap', items: [-1] }
+      filter: { field: 'soMay', items: [-1] }
     })
     return res.formatter.ok({
       data: items.rows,
@@ -51,11 +51,11 @@ export const getItems = async (req: Request, res: Response, next: NextFunction) 
 
 export const updateItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const tenDangNhap = String(req.params.tenDangNhap)
-    const itemToUpdate: NguoiDung = {
+    const soMay = String(req.params.soMay)
+    const itemToUpdate: SoMay = {
       ...req.body
     }
-    const itemUpdated = await service.updateItemByPk(tenDangNhap, itemToUpdate)
+    const itemUpdated = await service.updateItemByPk(soMay, itemToUpdate)
     return res.formatter.ok({ message: 'Item updated successfully!', data: itemUpdated })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })
@@ -64,8 +64,8 @@ export const updateItemByPk = async (req: Request, res: Response, next: NextFunc
 
 export const deleteItemByPk = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const tenDangNhap = String(req.params.tenDangNhap)
-    const destroyed = await service.deleteItemByPk(tenDangNhap)
+    const soMay = String(req.params.soMay)
+    const destroyed = await service.deleteItemByPk(soMay)
     return res.formatter.ok({ message: destroyed.message })
   } catch (error: any) {
     return res.formatter.badRequest({ message: error })

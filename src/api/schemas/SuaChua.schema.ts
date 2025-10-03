@@ -1,4 +1,5 @@
 import BoPhanSchema from '@/api/schemas/BoPhan.schema'
+import MaHangSchema from '@/api/schemas/MaHang.schema'
 import MaXuongSchema from '@/api/schemas/MaXuong.schema'
 import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
 
