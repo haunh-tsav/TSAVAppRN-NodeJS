@@ -10,8 +10,7 @@ router.post(
     { field: 'maHang', type: 'string', location: 'body' },
     { field: 'tenHang', type: 'string', location: 'body' },
     { field: 'maBP', type: 'string', location: 'body' },
-    { field: 'maXuong', type: 'string', location: 'body' },
-    { field: 'soMay', type: 'string', location: 'body' }
+    { field: 'maXuong', type: 'string', location: 'body' }
   ]),
   controller.createNewItem
 )
