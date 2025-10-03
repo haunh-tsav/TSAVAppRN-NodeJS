@@ -1,16 +1,14 @@
-import MaHangSchema, { MaHang } from '@/api/schemas/MaHang.schema'
+import SuaChuaSchema, { SuaChua } from '@/api/schemas/SuaChua.schema'
 import { RequestBodyType } from '@/type'
 import { dynamicQuery } from '../helpers/query'
 
-const NAMESPACE = 'services/ma-hang'
+const NAMESPACE = 'services/sua-chua'
 
-export const createNewItem = async (item: MaHang) => {
+export const createNewItem = async (item: SuaChua) => {
   try {
-    const itemFound = await MaHangSchema.findOne({ where: { maHang: item.maHang } })
+    const itemFound = await SuaChuaSchema.findOne({ where: { maHang: item.maHang } })
     if (itemFound) throw new Error('Item already exist!')
-    const maxStt = await MaHangSchema.max<number, MaHangSchema>('stt')
-    const nextStt = (maxStt || 0) + 1
-    const itemCreated = await MaHangSchema.create({ ...item, stt: nextStt })
+    const itemCreated = await SuaChuaSchema.create(item)
     return itemCreated
   } catch (error: any) {
     throw `${error.message}`
@@ -20,7 +18,7 @@ export const createNewItem = async (item: MaHang) => {
 // Get by id
 export const getItemByPk = async (maHang: string) => {
   try {
-    const itemFound = await MaHangSchema.findByPk(maHang)
+    const itemFound = await SuaChuaSchema.findByPk(maHang)
     if (!itemFound) throw new Error(`Item not found!`)
     return itemFound
   } catch (error: any) {
@@ -34,11 +32,11 @@ export const getItems = async (body: RequestBodyType) => {
   const sortingDirection = body.sorting.direction || 'asc'
 
   try {
-    const items = await MaHangSchema.findAndCountAll({
+    const items = await SuaChuaSchema.findAndCountAll({
       offset: (Number(body.paginator.page) - 1) * Number(body.paginator.pageSize),
       limit: body.paginator.pageSize === -1 ? undefined : body.paginator.pageSize,
       order: [[sortingColumn, sortingDirection]],
-      where: dynamicQuery<MaHang>(body)
+      where: dynamicQuery<SuaChua>(body)
     })
     return items
   } catch (error: any) {
@@ -47,9 +45,9 @@ export const getItems = async (body: RequestBodyType) => {
 }
 
 // Update
-export const updateItemByPk = async (maHang: string, itemToUpdate: MaHang) => {
+export const updateItemByPk = async (maHang: string, itemToUpdate: SuaChua) => {
   try {
-    const itemFound = await MaHangSchema.findByPk(maHang)
+    const itemFound = await SuaChuaSchema.findByPk(maHang)
     if (!itemFound) throw new Error(`Item not found!`)
     const updatedItem = await itemFound.update(itemToUpdate)
     return updatedItem
@@ -61,7 +59,7 @@ export const updateItemByPk = async (maHang: string, itemToUpdate: MaHang) => {
 // Delete
 export const deleteItemByPk = async (maHang: string) => {
   try {
-    const itemFound = await MaHangSchema.findOne({ where: { maHang } })
+    const itemFound = await SuaChuaSchema.findOne({ where: { maHang } })
     if (!itemFound) throw new Error(`Item not found!`)
     await itemFound.destroy()
     return { message: 'Deleted successfully!' }

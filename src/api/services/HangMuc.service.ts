@@ -8,7 +8,9 @@ export const createNewItem = async (item: HangMuc) => {
   try {
     const itemFound = await HangMucSchema.findOne({ where: { maHangMuc: item.maHangMuc } })
     if (itemFound) throw new Error('Item already exist!')
-    const itemCreated = await HangMucSchema.create(item)
+    const maxStt = await HangMucSchema.max<number, HangMucSchema>('stt')
+    const nextStt = (maxStt || 0) + 1
+    const itemCreated = await HangMucSchema.create({ ...item, stt: nextStt })
     return itemCreated
   } catch (error: any) {
     throw `${error.message}`

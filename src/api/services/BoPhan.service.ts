@@ -8,7 +8,9 @@ export const createNewItem = async (item: BoPhan) => {
   try {
     const itemFound = await BoPhanSchema.findOne({ where: { maBP: item.maBP } })
     if (itemFound) throw new Error('Item already exist!')
-    const itemCreated = await BoPhanSchema.create(item)
+    const maxStt = await BoPhanSchema.max<number, BoPhanSchema>('stt')
+    const nextStt = (maxStt || 0) + 1
+    const itemCreated = await BoPhanSchema.create({ ...item, stt: nextStt })
     return itemCreated
   } catch (error: any) {
     throw `${error.message}`
